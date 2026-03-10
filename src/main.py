@@ -309,10 +309,10 @@ def pre_auton():
         brain.screen.clear_screen()
         auton = 2
 
-    # Button on the Bottom-Left of the screen (No Auton)
+    # Button on the Bottom-Left of the screen (Calibrate trackers)
     if (brain.screen.x_position() < 239.5 and brain.screen.y_position() > 119.5):
         brain.screen.clear_screen()
-        auton = 3
+        calibrate_trackers()
 
     # Button on the Bottome-Right of the screen (Auton Test)
     if (brain.screen.x_position() > 239.5 and brain.screen.y_position() > 119.5):
@@ -340,10 +340,12 @@ def pre_auton():
             wait(1, SECONDS)
             calibrate_drivetrain
             autonright()
+            '''
 
         if (brain.screen.x_position() < 239.5 and brain.screen.y_position() > 119.5):
            brain.screen.clear_screen()
            brain.screen.print("Testing NO AUTON")
+           '''
 
 def autonomous():
     brain.screen.clear_screen()
