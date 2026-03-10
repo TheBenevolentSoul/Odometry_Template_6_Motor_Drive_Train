@@ -246,6 +246,41 @@ def Odometry_Loop():
 
 #endregion Odometry code
 
+def draw_auton_menues():
+    brain.screen.clear_screen()
+
+    # Button size
+    w = 240
+    h = 120
+
+    # TOP-LEFT — LEFT AUTON
+    brain.screen.set_fill_color(Color.RED)
+    brain.screen.draw_rectangle(0, 0, w, h)
+    brain.screen.set_pen_color(Color.WHITE)
+    brain.screen.print_at("LEFT", x=90, y=55)
+    brain.screen.print_at("AUTON", x=80, y=75)
+
+    # TOP-RIGHT — RIGHT AUTON
+    brain.screen.set_fill_color(Color.GREEN)
+    brain.screen.draw_rectangle(240, 0, w, h)
+    brain.screen.set_pen_color(Color.WHITE)
+    brain.screen.print_at("RIGHT", x=320, y=55)
+    brain.screen.print_at("AUTON", x=315, y=75)
+
+    # BOTTOM-LEFT — NO AUTON
+    brain.screen.set_fill_color(Color.BLUE)
+    brain.screen.draw_rectangle(0, 120, w, h)
+    brain.screen.set_pen_color(Color.WHITE)
+    brain.screen.print_at("NO", x=100, y=175)
+    brain.screen.print_at("AUTON", x=80, y=195)
+
+    # BOTTOM-RIGHT — TEST AUTON
+    brain.screen.set_fill_color(Color.PURPLE)
+    brain.screen.draw_rectangle(240, 120, w, h)
+    brain.screen.set_pen_color(Color.WHITE)
+    brain.screen.print_at("TEST", x=315, y=165)
+    brain.screen.print_at("AUTON", x=305, y=185)
+
 def pre_auton():
     #Runs code before autonomous
     brain.screen.clear_screen()
@@ -264,6 +299,51 @@ def pre_auton():
     odometry_thread = threading.Thread(target = Odometry_Loop, daemon = True)
     odometry_thread.start()
     # place pre-auton code here
+     # Button on the Top-Left of the screen (Auton Left)
+    if (brain.screen.x_position() < 239.5 and brain.screen.y_position() < 119.5):
+        brain.screen.clear_screen()
+        auton = 1
+
+    # Button on the Top-Right of the screen (Auton Right)
+    if (brain.screen.x_position() > 239.5 and brain.screen.y_position() < 119.5):
+        brain.screen.clear_screen()
+        auton = 2
+
+    # Button on the Bottom-Left of the screen (No Auton)
+    if (brain.screen.x_position() < 239.5 and brain.screen.y_position() > 119.5):
+        brain.screen.clear_screen()
+        auton = 3
+
+    # Button on the Bottome-Right of the screen (Auton Test)
+    if (brain.screen.x_position() > 239.5 and brain.screen.y_position() > 119.5):
+        brain.screen.set_fill_color(Color.ORANGE)
+        brain.screen.draw_rectangle(240, 120, 420, 120)
+        brain.screen.set_pen_color(Color.WHITE)
+        brain.screen.print_at("TEST", x=315, y=165)
+        brain.screen.print_at("AUTON", x=305, y=185)
+        wait(1, SECONDS)
+        
+        while not brain.screen.pressing():
+            pass
+
+        #All the testing
+        if (brain.screen.x_position() < 239.5 and brain.screen.y_position() < 119.5):
+            brain.screen.clear_screen()
+            wait(1, SECONDS)
+            calibrate_drivetrain
+            brain.screen.print ("Testing Left AUTON")
+            autonleft()
+
+        if (brain.screen.x_position() > 239.5 and brain.screen.y_position() < 119.5):
+            brain.screen.clear_screen()
+            brain.screen.print("Testing Right AUTON")
+            wait(1, SECONDS)
+            calibrate_drivetrain
+            autonright()
+
+        if (brain.screen.x_position() < 239.5 and brain.screen.y_position() > 119.5):
+           brain.screen.clear_screen()
+           brain.screen.print("Testing NO AUTON")
 
 def autonomous():
     brain.screen.clear_screen()
