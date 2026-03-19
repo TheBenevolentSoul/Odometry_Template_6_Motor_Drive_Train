@@ -53,6 +53,19 @@ wait(30, MSEC)
 
 def Drivetrain_Control():
     #Setting speeds based on controller joystick input
+    #Setting speeds based on controller joystick input
+    #Variables for left side of drivetrain
+    Left_Velocity = (controller_1.axis3 + 0.5 * controller_1.axis1)/8.3
+    Right_Velocity = (controller_1.axis3 - 0.5 * controller_1.axis1)/8.3
+    #spin drivetrain
+    Left_1.spin(FORWARD, Left_Velocity, VOLT)
+    Left_2.spin(FORWARD, Left_Velocity, VOLT)
+    Left_3.spin(FORWARD, Left_Velocity, VOLT)
+    #Right Drivetrain
+    Right_1.spin(FORWARD, Right_Velocity, VOLT)
+    Right_2.spin(FORWARD, Right_Velocity, VOLT)
+    Right_3.spin(FORWARDM, Right_Velocity, VOLT)
+    '''
     #Left side of drivetrain
     Left_1.set_velocity((controller.axis3.position + 0.5 * controller.axis1.position), PERCENT)
     Left_2.set_velocity((controller.axis3.position + 0.5 * controller.axis1.position), PERCENT)
@@ -71,6 +84,7 @@ def Drivetrain_Control():
     Right_1.spin(FORWARD)
     Right_2.spin(FORWARD)
     Right_3.spin(FORWARD)
+    '''
 
 # Make random actually random
 def initializeRandomSeed():
